@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Soumya</title>
     <style>
         body {
@@ -15,22 +15,23 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #fdf2f4;
             overflow: hidden;
+            touch-action: manipulation;
         }
 
         #main-content {
             text-align: center;
             background: white;
-            padding: 50px;
+            padding: 40px;
             border-radius: 30px;
             box-shadow: 0 10px 30px rgba(214, 51, 132, 0.1);
-            max-width: 450px;
-            width: 90%;
+            max-width: 400px;
+            width: 85%;
             z-index: 1;
         }
 
         h1 {
             color: #333;
-            font-size: 2.2rem;
+            font-size: 2rem;
             margin-bottom: 30px;
             line-height: 1.4;
         }
@@ -40,11 +41,11 @@
             gap: 20px;
             justify-content: center;
             align-items: center;
-            min-height: 120px;
+            min-height: 150px;
         }
 
         #yesBtn {
-            padding: 15px 40px;
+            padding: 15px 35px;
             font-size: 1.2rem;
             background-color: #ef476f;
             color: white;
@@ -57,7 +58,7 @@
         }
 
         #noBtn {
-            padding: 15px 40px;
+            padding: 15px 35px;
             font-size: 1.2rem;
             background-color: #e9ecef;
             color: #495057;
@@ -82,9 +83,9 @@
         }
 
         .subtext {
-            margin-top: 25px;
+            margin-top: 20px;
             color: #adb5bd;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-style: italic;
         }
 
@@ -94,13 +95,9 @@
             padding: 20px;
         }
 
-        #celebration h1 {
-            color: #ef476f;
-        }
-
         #celebration img {
             max-width: 100%;
-            max-height: 400px;
+            max-height: 70vh;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             margin-top: 20px;
@@ -111,17 +108,15 @@
 
     <div id="main-content">
         <h1>Soumya, will you be my Valentine? 💖</h1>
-        
         <div class="buttons">
             <button id="yesBtn">Yes</button>
             <button id="noBtn" class="shake">No</button>
         </div>
-        
         <p class="subtext">"No" seems a bit shy...</p>
     </div>
 
     <div id="celebration">
-        <h1>YAY! I knew you'd say yes! 😍</h1>
+        <h1>I knew you'd say yes! 😍</h1>
         <img src="us.jpg" alt="Our Special Photo">
     </div>
 
@@ -133,16 +128,30 @@
 
         let yesScale = 1;
 
-        noBtn.addEventListener('mouseover', () => {
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        function moveButton() {
+            // Screen dimensions minus button size to keep it on screen
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
             
             noBtn.style.position = 'fixed';
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
 
-            yesScale += 0.35; 
+            // Grow the Yes button
+            yesScale += 0.4; 
             yesBtn.style.transform = `scale(${yesScale})`;
+        }
+
+        // Desktop support
+        noBtn.addEventListener('mouseover', moveButton);
+
+        // Mobile support: triggers as soon as the finger touches
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevents the actual "click" from happening
+            moveButton();
         });
 
         yesBtn.addEventListener('click', () => {

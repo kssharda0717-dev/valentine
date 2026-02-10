@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Question for You</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf2f4;
+            overflow: hidden;
+        }
+
+        #main-content {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(214, 51, 132, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .header-icon {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px; /* Space for the growing button */
+        }
+
+        #yesBtn {
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            background-color: #ef476f;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease-in-out;
+            z-index: 100;
+        }
+
+        #noBtn {
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            background-color: #e9ecef;
+            color: #495057;
+            border: none;
+            border-radius: 50px;
+            position: relative;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.1s ease-out; /* Faster transition for the runaway effect */
+        }
+
+        .shake {
+            animation: shake 0.6s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            50% { transform: translateX(2px); }
+            75% { transform: translateX(-2px); }
+            100% { transform: translateX(0); }
+        }
+
+        .subtext {
+            margin-top: 20px;
+            color: #adb5bd;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        #celebration {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #celebration img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-content">
+        <img class="header-icon" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZpZ3R3YXo5bmZpZ3R3YXo5bmZpZ3R3YXo5bmZpZ3R3YXo5JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/v4aDR0Y5gWkY0F6R9m/giphy.gif" alt="Cute Animal">
+        
+        <h1>Soumya, will you be my Valentine? 💖</h1>
+        
+        <div class="buttons">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn" class="shake">No</button>
+        </div>
+        
+        <p class="subtext">"No" seems a bit shy...</p>
+    </div>
+
+    <div id="celebration">
+        <h1>I knew you'd say yes! 😍</h1>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJmZzR6bmZ3bmZ3bmZ3bmZ3/l41lTfuxsF2A8N9oQ/giphy.gif" alt="Celebration Photo">
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const mainContent = document.getElementById('main-content');
+        const celebration = document.getElementById('celebration');
+
+        let yesScale = 1;
+
+        // Logic for the runaway button
+        noBtn.addEventListener('mouseover', () => {
+            // Calculates random position within the viewport
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+
+            // Logic for the growing "Yes" button
+            yesScale += 0.3; // Increases size each time she misses "No"
+            yesBtn.style.transform = `scale(${yesScale})`;
+        });
+
+        // Show celebration when Yes is clicked
+        yesBtn.addEventListener('click', () => {
+            mainContent.style.display = 'none';
+            celebration.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

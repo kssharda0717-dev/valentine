@@ -106,6 +106,10 @@
 </head>
 <body>
 
+    <audio id="valentineMusic">
+        <source src="music.m4a" type="audio/mp4">
+    </audio>
+
     <div id="main-content">
         <h1>Soumya, will you be my Valentine? 💖</h1>
         <div class="buttons">
@@ -125,14 +129,13 @@
         const yesBtn = document.getElementById('yesBtn');
         const mainContent = document.getElementById('main-content');
         const celebration = document.getElementById('celebration');
+        const music = document.getElementById('valentineMusic');
 
         let yesScale = 1;
 
         function moveButton() {
-            // Screen dimensions minus button size to keep it on screen
             const maxX = window.innerWidth - noBtn.offsetWidth;
             const maxY = window.innerHeight - noBtn.offsetHeight;
-            
             const randomX = Math.floor(Math.random() * maxX);
             const randomY = Math.floor(Math.random() * maxY);
             
@@ -140,23 +143,23 @@
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
 
-            // Grow the Yes button
             yesScale += 0.4; 
             yesBtn.style.transform = `scale(${yesScale})`;
         }
 
-        // Desktop support
         noBtn.addEventListener('mouseover', moveButton);
-
-        // Mobile support: triggers as soon as the finger touches
         noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevents the actual "click" from happening
+            e.preventDefault();
             moveButton();
         });
 
         yesBtn.addEventListener('click', () => {
             mainContent.style.display = 'none';
             celebration.style.display = 'block';
+            
+            // Start the music and set volume to 100%
+            music.volume = 1.0; 
+            music.play();
         });
     </script>
 </body>
